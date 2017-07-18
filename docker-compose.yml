@@ -3,6 +3,8 @@ version: "3"
 services:
   jenkins:
     image: jenkins
+    networks:
+      - cinet
     ports:
       - "8080:8080"
       - "50000:50000"
@@ -16,7 +18,7 @@ services:
     ports:
       - "9000:9000"
     networks:
-      - sonarnet
+      - cinet
     environment:
       - SONARQUBE_JDBC_URL=jdbc:postgresql://db:5432/sonar
     volumes:
@@ -28,7 +30,7 @@ services:
   db:
     image: postgres
     networks:
-      - sonarnet
+      - cinet
     environment:
       - POSTGRES_USER=sonar
       - POSTGRES_PASSWORD=sonar
@@ -37,5 +39,5 @@ services:
       - /Users/Guto/Desenvolvimento/Docker/ci/postgres/data:/var/lib/postgresql/data
 
 networks:
-  sonarnet:
+  cinet:
     driver: bridge
